@@ -1,0 +1,59 @@
+<html>
+    <head>
+    </head>
+    <body>
+
+        <button onclick="getLocation()">Find me and Brian!</button>
+        <div id="map-canvas" style="height:100%;margin:0px;padding=0px"></div>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+        <script>
+        var map;
+
+        window.initialize = function (lat, lng) {
+            var myLatLng = new google.maps.LatLng(lat, lng);
+            var briansLatLng = new google.maps.LatLng(40.7091919, -74.00680609999999);
+
+            var mapOptions = {
+                zoom: 2,
+                center: new google.maps.LatLng(lat, lng)
+            };
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var myMarker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                animation: google.maps.Animation.DROP,
+                title: "I am here!"
+            });
+            var briansMarker = new google.maps.Marker({
+                position: briansLatLng,
+                map: map,
+                animation: google.maps.Animation.DROP,
+                title: "Brian is here!"
+            });
+  google.maps.event.addListener(marker, 'click', toggleBounce);
+
+        }
+        </script>
+
+        <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition( function (position) { 
+                    window.initialize(position.coords.latitude, position.coords.longitude);
+                });
+            } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+
+        // console.log(getLocation());
+        </script>
+
+
+    </body>
+
+</html>
